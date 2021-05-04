@@ -3,8 +3,11 @@ Helm chart for coreos etcd 3.4+
 
 ## Overview
 
-This is a chart based on the incubator chart from helm/charts. Dusted off to function with etcd 3.4 and updated for helm3 as well
-as added snapshot restore and a cronjob to make backups.
+This is a chart based on the incubator chart from helm/charts. Dusted off to function with etcd 3.4 and updated for helm3. It also
+adds support for:
+* Restore from snapshot
+* CronJob to make snapshots
+* Prometheus operator support
 
 ## Configuration
 
@@ -31,6 +34,20 @@ The following table lists the configurable parameters of the etcd chart and thei
 | `auth.peer.useAutoTLS`              | Automatically create the TLS certificates | `false` |
 | `auth.peer.secureTransport`         | Enables encryption peer communication using TLS certificates **(At the moment works only with Auto TLS)** | `false` |
 | `auth.peer.enableAuthentication`     | Enables host authentication using TLS certificates. Existing secret required | `false` |
+| `serviceAccount.create`              | Create serviceaccount | `true` |
+| `podMonitor.enabled`                 | Enable podMonitor | `false` |
+| `prometheusRules.enabled`            | Enable prometheusRules | `false` |
+| `snapshot.restore.enabled`           | Enabled restore from snapshot | false |
+| `snapshot.restore.claimName`         | PVC claim name where snapshot is stored | `""` |
+| `snapshot.restore.fileName`          | Snapshot filename to restore from on PVC | `""` |
+| `snapshot.backup.enabled`            | Enable CronJob to make snapshots and save to PVC | `""` |
+| `snapshot.backup.schedule`           | Snapshot schedule | `0/30 * * * *` |
+| `snapshot.backup.historyLimit`        | Snapshot job history | `1` |
+| `snapshot.backup.snapshotHistoryLimit` | Snapashot file history limit | `1` |
+| `snapshot.backup.claimName`          | Existing claim name name | `""` |
+| `snapshot.backup.size`               | Create pvc with size | `10Gi` |
+| `snapshot.backup.storageClassName`   | Create pvc storageclass | `default` |
+| `snapshot.backup.resources`          | Snapshot CronJob resources | `{}` |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 
