@@ -20,5 +20,5 @@ spec:
         {{- toYaml .Values.podMonitor.relabelings | nindent 8 }}
   selector:
     matchLabels:
-      {{- include "etcd.selectorLabels" . | nindent 6 }}
+      {{- include "etcd.server.selectorLabels" . | nindent 6 }}
 {{- end }}

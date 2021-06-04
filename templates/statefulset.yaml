@@ -11,7 +11,7 @@ spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      {{- include "etcd.selectorLabels" . | nindent 6 }}
+      {{- include "etcd.server.selectorLabels" . | nindent 6 }}
   serviceName: {{ template "etcd.fullname" . }}
   template:
     metadata:
@@ -21,7 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "etcd.selectorLabels" . | nindent 8 }}
+        {{- include "etcd.server.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "etcd.serviceAccountName" . }}
       securityContext:

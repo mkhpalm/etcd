@@ -51,6 +51,22 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Server selector labels
+*/}}
+{{- define "etcd.server.selectorLabels" -}}
+app.kubernetes.io/component: server
+{{ include "etcd.selectorLabels" . }}
+{{- end }}
+
+{{/*
+Snapshotter selector labels
+*/}}
+{{- define "etcd.snapshotter.selectorLabels" -}}
+app.kubernetes.io/component: snapshotter
+{{ include "etcd.selectorLabels" . }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "etcd.serviceAccountName" -}}
